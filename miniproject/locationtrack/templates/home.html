@@ -1,0 +1,45 @@
+{% extends "navbar.html" %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<div class="container my-5">
+    <h1>Welcome to the Dashboard</h1>
+    <p>Select a feature from the navigation menu to get started.</p>
+</div>
+
+<div class="container my-5">
+    <h2>Recent Activity</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Location</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John Doe</td>
+                <td>Classroom 101</td>
+                <td>10:15 AM</td>
+            </tr>
+            <tr>
+                <td>Jane Smith</td>
+                <td>Cafeteria</td>
+                <td>11:30 AM</td>
+            </tr>
+            <tr>
+                <td>Michael Johnson</td>
+                <td>Gym</td>
+                <td>1:45 PM</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container my-5">
+    <h2>Alerts</h2>
+    <div class="alert alert-danger" role="alert">
+        Student Jane Smith is currently in an unauthorized area.
+    </div>
+</div>
+{% endblock body %}
