@@ -20,12 +20,12 @@ The Student Safety Tracker leverages geolocation technologies and advanced brows
 - **Scalability**: Built to handle large-scale usage by educational institutions.
 
 ## Technologies Used  
-- **Frontend**: React, CSS, JavaScript
-- **Backend**: Python Flask for face recognition and location tracking
-- **Database**: MongoDB for storing student data, attendance records, and location logs
-- **User Authentication**: Node.js for secure login management
-- **Location Tracking**: Geolocation API for live tracking
-- **Face Recognition**: OpenCV and Dlib for face ID validation
+- **Frontend**: HTML, Bootstrap  
+- **Backend**: Python Flask for face recognition and location tracking  
+- **Database**: SQLite for storing student data, attendance records, and location logs using inbuilt Django modules  
+- **User Authentication**: Django CSRF tokens for secure login management  
+- **Location Tracking**: Geolocation API for live tracking  
+- **Face Recognition**: OpenCV and DeepFace library for face ID validation  
 
 ## Installation  
 To set up the Student Safety Tracker application locally, follow these steps:
@@ -33,62 +33,54 @@ To set up the Student Safety Tracker application locally, follow these steps:
 1. Clone the repository:  
    ```bash
    git clone https://github.com/yourusername/StudentSafetyTracker.git
-   cd StudentSafetyTracker
+   cd StudentSafetyTracking_5thSem
    ```
 
-2. Install the necessary dependencies for both the frontend and backend. Refer to the imports for detailed requirements.
 
-For the frontend:
-```bash
-cd src
-npm install
-```
-
-For the backend:
-```bash
-cd backend
-pip install -r requirements.txt
-```
-
-**Dependencies:**
-- Flask
-- OpenCV
-- Dlib
-- Geopy
-- Flask-CORS
-
-3. Set up the MongoDB database and ensure it is running.
-
-4. Start the backend server:
-```bash
-python app.py
-```
-
-5. Start the frontend server:
-```bash
-npm start
-```
-
-6. Set up the virtual environment for the face recognition module:
+2. Set up the virtual environment for the face recognition module:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Linux/macOS
 venv\Scripts\activate  # On Windows
 ```
+ #After Setting up the environment it looks like this 
+ (venv) path/StudentSafetyTracking_5thSem
 
-Run the face recognition module:
+ 3. Setup the django and install all other requirements
 ```bash
-(venv) python face_recognition_module.py
+   cd miniproject (move to project folder)
+   cd locationtrack(move to user's app)
+   pip install django
+   pip install -r requirements.txt
+```
+ 
+4.After install all the requirements split the terminal into two parts for flask server and django application 
+
+Move to miniproject directory and make database migrations
+```bash
+   (venv) python manage.py makemigrations
+   (venv) python manage.py migrate
 ```
 
-7. Run the location tracking service:
+5. Run Project:
 ```bash
-(venv) python location_service.py
+   cd ..
+   cd miniproject
+```
+
+6. Start the django server:
+```bash
+   (venv) python manage.py runsever
+```
+
+7. For the backend(Flask server):Remeber to be in locationtrack directory and ensure everything is installed and running on virtual environment
+```bash
+(venv) python validatelocation.py
 ```
 
 ## Screenshots  
 ### Login Page  
-![Login Page](https://example.com/path-to-login-page-image)
+![Login Page](/home/APPLE/Data/Study/5thSem/FSD/images/1getstartedpng.png)
 
 ### Dashboard  
 ![Dashboard](https://example.com/path-to-dashboard-image)
