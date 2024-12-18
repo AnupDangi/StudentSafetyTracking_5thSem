@@ -80,7 +80,7 @@ Move to miniproject directory and make database migrations
 
 ## Screenshots  
 ### Login Page  
-![Login Page](/home/APPLE/Data/Study/5thSem/FSD/images/1getstartedpng.png)
+![Login Page](/home/APPLE/Data/Study/5thSem/FSD/StudentSafetyTracking_5thSem/outputs/1getstartedpng.png)
 
 ### Dashboard  
 ![Dashboard](https://example.com/path-to-dashboard-image)
