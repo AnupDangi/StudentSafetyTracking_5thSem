@@ -79,8 +79,8 @@ Move to miniproject directory and make database migrations
 ```
 
 ## Screenshots  
-### Login Page  
-![Login Page](/home/APPLE/Data/Study/5thSem/FSD/StudentSafetyTracking_5thSem/outputs/1getstartedpng.png)
+### Login Page  ![1getstartedpng](https://github.com/user-attachments/assets/0f757b3e-b335-46ab-a53d-866191387532)
+
 
 ### Dashboard  
 ![Dashboard](https://example.com/path-to-dashboard-image)
