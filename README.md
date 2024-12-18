@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/9a8de9cb-62bb-4ce1-beea-738d21e1a488)# Student Safety Tracker
-
 ## Overview  
 **Student Safety Tracker** is an innovative application designed for the safety and attendance tracking of students studying abroad. With features such as live location tracking, browser-based face ID validation, and robust attendance history management, this web application ensures students' safety while streamlining attendance processes for educational institutions. The project also includes safeguards against location manipulation through VPNs or paid apps.
 
@@ -49,7 +47,7 @@ venv\Scripts\activate  # On Windows
  3. Setup the django and install all other requirements
 ```bash
    cd miniproject (move to project folder)
-   cd locationtrack(move to user's app)
+   cd locationtrack (move to user's app)
    pip install django
    pip install -r requirements.txt
 ```
