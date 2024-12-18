@@ -23,7 +23,7 @@ app.secret_key = os.urandom(24)  # Secret key to store session data securely
 CORS(app, origins=["http://127.0.0.1:8000"])
 
 # Initialize OpenCage Geocode API
-OPEN_CAGE_API_KEY = os.getenv('OPENCAGE_API_KEY', 'c31c2477cab143ca848ecedb0d182843') 
+OPEN_CAGE_API_KEY = os.getenv('OPENCAGE_API_KEY', 'YOURAPIKEY') 
 geocoder = OpenCageGeocode(OPEN_CAGE_API_KEY)
 
 # Updated Flask route
