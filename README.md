@@ -79,17 +79,45 @@ Move to miniproject directory and make database migrations
 ```
 
 ## Screenshots  
-### Login Page  ![1getstartedpng](https://github.com/user-attachments/assets/0f757b3e-b335-46ab-a53d-866191387532)
 
+### Landing Page
+![1getstartedpng](https://github.com/user-attachments/assets/0f757b3e-b335-46ab-a53d-866191387532)
 
-### Dashboard  
-![Dashboard](https://example.com/path-to-dashboard-image)
+### Signup Page 
+![2signup](https://github.com/user-attachments/assets/d9a3cc13-5338-47ed-9dad-f7e91e92ccb9)
+
+### Login Page 
+![4 login](https://github.com/user-attachments/assets/b353e7c4-5c01-49ff-937c-e662f5ea2fee)
+
+### Dashboard 
+![5 homepage](https://github.com/user-attachments/assets/de51b400-2ed4-4fc2-870b-129711280148)
+
+### Live Location Tracking 
+![6 Validatelocation](https://github.com/user-attachments/assets/7b8edf63-fb6e-42d6-b022-84cbbabef129)
+
+### When singup form's country doesnot matches during location validation 
+![Locationnotvalidated](https://github.com/user-attachments/assets/a109fe31-5a75-49c4-ae06-27542f90a5f7)
+
+### Face Validation 
+![7 face_validation](https://github.com/user-attachments/assets/23ec0716-6a63-475e-bf02-182112525fbb)
+![8 VerifyAttendance](https://github.com/user-attachments/assets/d0ab4a29-ca2a-4fe5-b36c-d904c00e3db4)
 
 ### Attendance History  
-![Attendance History](https://example.com/path-to-attendance-history-image)
+![9 History](https://github.com/user-attachments/assets/8e5a3075-c472-4884-be70-3a7ebcf4d1cc)
 
-### Live Location Tracking  
-![Live Location Tracking](https://example.com/path-to-location-tracking-image)
+### Profile
+![10 Profile](https://github.com/user-attachments/assets/a408afaf-d4fe-4357-9ee1-e929f76a1c2a)
+
+### Code working validation
+![11 Codetemplates](https://github.com/user-attachments/assets/3a70517c-5b78-43b1-a207-d462d6378df6)
+
+### face_recognitionmodel using tkinter before integration in web
+![image](https://github.com/user-attachments/assets/db3b1242-6eb3-4e1e-90f9-ea98697a03e8)
+
+### Admin Panel with Attendance tracking 
+![AdminPanelwhennoalert](https://github.com/user-attachments/assets/a39febb3-f3c8-4afc-b727-b7d3f8576b60)
+
+### Alert Message on User's Dashboard 
 
 ## Contributing  
 Contributions are always welcome.  
