@@ -118,6 +118,8 @@ Move to miniproject directory and make database migrations
 ### Alert Message on User's Dashboard 
 ![alertmessage](https://github.com/user-attachments/assets/a4236ff4-c7b3-402a-ba03-60ae93763b95)
 
+### Alert Message on Admin Panel
+![AdminPanelwhennoalert](https://github.com/user-attachments/assets/5f220d65-4a8c-45c8-a1d8-d36b43f9b9f3)
 
 ## Contributing  
 Contributions are always welcome.  
