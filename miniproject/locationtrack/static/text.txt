@@ -1,2 +1,0 @@
-Only add the available data to the user.
-This is a text file.

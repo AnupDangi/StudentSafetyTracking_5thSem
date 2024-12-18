@@ -1,6 +1,96 @@
 {% extends "navbar.html" %}
-{% block title %}Home{% endblock title %}
+{% block title %}Location Validation{% endblock title %}
 {% block body %}
-    <!-- Your home page content goes here -->
-     <h1>This is Location Tracking Section</h1>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 1rem;
+        color: #555;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="container">
+    <h1>Location Validation</h1>
+    <p id="locationStatus">Please validate your location to proceed.</p>
+    <button onclick="validateLocation()">Validate Location</button>
+</div>
+
+<script>
+    async function validateLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const userEmail = "{{ user.email|escapejs }}";
+    
+                    try {
+                        const response = await fetch('http://127.0.0.1:5000/validate_location', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ latitude, longitude, email: userEmail })
+                        });
+    
+                        const data = await response.json();
+                        const locationStatus = document.getElementById("locationStatus");
+                        
+                        if (response.ok && data.is_valid) {
+                            locationStatus.textContent = "Location validated successfully!";
+                            locationStatus.style.color = "green";
+                            setTimeout(() => {
+                                window.location.href = "/faceattendance/";
+                            }, 2000);
+                        } else {
+                            locationStatus.textContent = `Validation failed. Current country: ${data.user_country || "Unknown"}`;
+                            locationStatus.style.color = "red";
+                        }
+                    } catch (error) {
+                        document.getElementById("locationStatus").textContent =
+                            "Error during validation: " + error.message;
+                        document.getElementById("locationStatus").style.color = "red";
+                    }
+                },
+                (error) => {
+                    const locationStatus = document.getElementById("locationStatus");
+                    locationStatus.textContent = "Error getting location: " + error.message;
+                    locationStatus.style.color = "red";
+                }
+            );
+        } else {
+            const locationStatus = document.getElementById("locationStatus");
+            locationStatus.textContent = "Geolocation is not supported by this browser.";
+            locationStatus.style.color = "red";
+        }
+    }
+    </script>
+    
 {% endblock body %}

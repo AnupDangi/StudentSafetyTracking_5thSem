@@ -1,45 +1,90 @@
+
 {% extends "navbar.html" %}
-{% block title %}Home{% endblock title %}
+{% block title %}Student Safety Tracking Dashboard{% endblock title %}
+
 {% block body %}
-<div class="container my-5">
-    <h1>Welcome to the Dashboard</h1>
-    <p>Select a feature from the navigation menu to get started.</p>
-</div>
-
-<div class="container my-5">
-    <h2>Recent Activity</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Student</th>
-                <th>Location</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John Doe</td>
-                <td>Classroom 101</td>
-                <td>10:15 AM</td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>Cafeteria</td>
-                <td>11:30 AM</td>
-            </tr>
-            <tr>
-                <td>Michael Johnson</td>
-                <td>Gym</td>
-                <td>1:45 PM</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="container my-5">
-    <h2>Alerts</h2>
-    <div class="alert alert-danger" role="alert">
-        Student Jane Smith is currently in an unauthorized area.
+<center><h1>Welcome to the Dashboard, {{ user.full_name }},{{ user.nationality }}</h1></center>
+  
+  <!-- Attendance Section -->
+   <br><br>
+    <div class="card shadow-lg">
+            {% if alert_needed %}
+            <div class="alert alert-warning text-center mt-4">
+                <strong>Alert!</strong> Your last attendance was more than 24 hours ago. Please mark your attendance now.
+            </div>
+        {% endif %}
+  <div class="row justify-content-center">
+    <div class="col-md-3 text-center">
+            <div class="card-header bg-info text-white">
+                <h2>Mark Your Attendance</h2>
+            </div>
+            <div class="card-body">
+                <p>Click the button below to mark your attendance.</p>
+                <a href="{% url 'locationtrack' %}" class="btn btn-success btn-lg">
+                    <i class="bi bi-check-circle"></i> Mark Attendance
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+
+<!--Attendance timer -->
+<div class="container my-5">
+    <h2>Explore Places</h2>
+    <div id="image-gallery" class="d-flex flex-wrap justify-content-center gap-3">
+        <!-- Images will be dynamically rendered here -->
+    </div>
+</div>
+<script>
+    // Fetch photos from Unsplash based on the user's nationality
+    function fetchPhotos(query) {
+        const url = `https://api.unsplash.com/search/photos?client_id=tMBJxy-2yz34tHcRao2lVRSY7j5WwdEUvxWfjqkH8ig&query=${query}&per_page=3`;
+
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => renderImages(data.results))
+            .catch((error) => console.error('Error fetching photos:', error));
+    }
+
+    // Render images dynamically in the gallery
+    function renderImages(images) {
+        const gallery = document.getElementById('image-gallery');
+        gallery.innerHTML = ''; // Clear existing content
+
+        if (!images || images.length === 0) {
+            gallery.innerHTML = '<p>No images found.</p>';
+            return;
+        }
+
+        images.forEach((image) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.width = '18rem';
+            card.style.margin = '10px';
+
+            card.innerHTML = `
+                <img src="${image.urls.regular}" class="card-img-top" alt="${image.alt_description || 'Image'}">
+                <div class="card-body">
+                    <h5 class="card-title">${image.user.name || 'Unknown Author'}</h5>
+                    <p class="card-text">${image.alt_description || 'No description available'}</p>
+                </div>
+            `;
+
+            gallery.appendChild(card);
+        });
+    }
+
+    // Get user's nationality from Django template
+    const userNationality = "{{ user.nationality }}";
+
+    // Fetch and render photos based on user's nationality
+    fetchPhotos(userNationality);
+
+</script>
+
 {% endblock body %}

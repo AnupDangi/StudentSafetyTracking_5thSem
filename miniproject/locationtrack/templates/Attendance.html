@@ -1,6 +1,157 @@
 {% extends "navbar.html" %}
 {% block title %}Attendance{% endblock title %}
 {% block body %}
-    <!-- Your home page content goes here -->
-     <h1>This is your Attendance Section</h1>
+<div class="container">
+    <h1>Face Recognition Attendance</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <video id="videoElement" autoplay class="img-fluid"></video>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="mt-2">
+                <button onclick="captureImage('add_user')" class="btn btn-primary mr-2">Add Face</button>
+                <button onclick="captureImage('verify')" class="btn btn-success">Verify Attendance</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="result" class="mt-3"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        checkIfFaceRegistered();
+    });
+
+    var video = document.getElementById('videoElement');
+    var resultDiv = document.getElementById('result');
+
+    // Access webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err) {
+            console.error("Error accessing webcam: ", err);
+        });
+
+    function captureImage(action) {
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        
+        var image_data = canvas.toDataURL('image/jpeg');
+        sendImageToBackend(image_data, action);
+    }
+
+    function dataURItoBlob(dataURI) {
+        var byteString = atob(dataURI.split(',')[1]);
+        var arrayBuffer = new ArrayBuffer(byteString.length);
+        var uintArray = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteString.length; i++) {
+            uintArray[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([uintArray], { type: 'image/jpeg' });
+    }
+
+    function sendImageToBackend(image_data, action) {
+        var formData = new FormData();
+        formData.append("image", dataURItoBlob(image_data));
+
+        // Update URLs to match Django's defined paths
+        var url = action === 'add_user' ? '/add_user_face/' : '/verify_attendance/';
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            credentials: 'include' // Include session cookies for authentication
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultDiv.innerHTML = data.message;
+            resultDiv.className = data.verified ? 'alert alert-success' : 'alert alert-danger';
+        })
+        .catch(error => {
+            resultDiv.innerHTML = 'Error: ' + error;
+            resultDiv.className = 'alert alert-danger';
+        });
+    }
+    function checkIfFaceRegistered() {
+    fetch('/is_face_registered/', {
+        method: "GET",
+        credentials: 'include' // Include session cookies for authentication
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.registered) {
+            // Disable the "Add Face" button if already registered
+            const addFaceButton = document.querySelector('button[onclick*="add_user"]');
+            addFaceButton.disabled = true;
+
+            // Display a message indicating face is already registered
+            resultDiv.innerHTML = "Face already registered!";
+            resultDiv.className = 'alert alert-warning';
+        } else {
+            // Enable the "Add Face" button if not registered
+            const addFaceButton = document.querySelector('button[onclick*="add_user"]')
+            resultDiv.innerHTML = "Face is not registered!";
+            resultDiv.className = 'alert alert-warning';
+            addFaceButton.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error checking face registration:', error);
+    });
+}
+function sendLocationToBackend() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                const formData = new FormData();
+                formData.append('latitude', latitude);
+                formData.append('longitude', longitude);
+
+                fetch('/record_attendance/', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include' // Include session cookies for authentication
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Attendance recorded! City: ${data.city}`);
+                        resultDiv.innerHTML = `Attendance recorded successfully for ${data.city}.`;
+                        resultDiv.className = 'alert alert-success';
+                    } else {
+                        alert(`Error: ${data.error}`);
+                        resultDiv.innerHTML = `Error: ${data.error}`;
+                        resultDiv.className = 'alert alert-danger';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultDiv.innerHTML = `Error: ${error}`;
+                    resultDiv.className = 'alert alert-danger';
+                });
+            }, function(error) {
+                alert('Error getting location: ' + error.message);
+                resultDiv.innerHTML = `Error getting location: ${error.message}`;
+                resultDiv.className = 'alert alert-danger';
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+            resultDiv.innerHTML = 'Geolocation is not supported by this browser.';
+            resultDiv.className = 'alert alert-warning';
+        }
+    }
+    
+
+</script>
 {% endblock body %}
